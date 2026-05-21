@@ -117,25 +117,22 @@ def home():
         }
     }), 200
 
-
-# ------------------------------------------------------------
-# SERVER START
-# ------------------------------------------------------------
 if __name__ == "__main__":
     # Run Flask on all network interfaces (0.0.0.0) so it's accessible
     # from your frontend running on VS Code Live Server
-    # Port 5000 is the default Flask port
-    # debug=True enables auto-reload when code changes
+    # Port is read from the PORT environment variable (set by Railway)
+    # debug=False for production
+    port = int(os.environ.get("PORT", 5000))
     print("=" * 50)
     print("AI Universe Backend Server")
     print("=" * 50)
-    print("Server running at: http://127.0.0.1:5000")
-    print("Chat endpoint: POST http://127.0.0.1:5000/chat")
+    print(f"Server running at: http://127.0.0.1:{port}")
+    print(f"Chat endpoint: POST http://127.0.0.1:{port}/chat")
     print("Press CTRL+C to stop the server")
     print("=" * 50)
 
     app.run(
         host="0.0.0.0",   # Listen on all network interfaces
-        port=5000,         # Default Flask port
-        debug=True         # Auto-reload on code changes
+        port=port,         # Port from environment variable
+        debug=False        # Disabled for production
     )
